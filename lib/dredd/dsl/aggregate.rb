@@ -1,19 +1,22 @@
 require 'hashie/mash'
 require 'statsample'
+require 'dredd/dsl/predicate'
 
 
 module Dredd
   module Dsl
     class Aggregate
       def execute(collection)
-        return collection unless @projection
+        return collection unless @func
 
-        arr = collection.map{|k| Hashie::Mash.new(k) }
-                        .map{|k| k.instance_eval(&@projection) }
+        arr = if @projection
+          collection.map{|k| Hashie::Mash.new(k) }
+                    .map{|k| k.instance_eval(&@projection) }
+        else
+          (0...collection.size).to_a
+        end
 
-        return arr unless @func
-
-        arr.to_scale.send(@func)
+        @predicate.execute(arr.to_scale.send(@func))
       end
 
 
@@ -21,6 +24,8 @@ module Dredd
         if [:sum, :mean, :min, :max, :size].include?(meth)
           @func = meth
           @projection = block
+          @predicate = Predicate.new
+          return @predicate
         else
           super
         end

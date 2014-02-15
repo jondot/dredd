@@ -22,6 +22,14 @@ describe Dredd::Query do
     q.execute([{:foo  => 0},{:foo  => 0}, {:foo => 60}]).must_equal(20)
   end
 
+  it "should run aggregations without projection" do
+    q = Dredd::Query.new("all{ foo > 10 }.size")
+    q.execute([{:foo  => 1},{:foo  => 2}, {:foo => 60}]).must_equal(1)
+
+    q = Dredd::Query.new("(all{ foo > 10 }.size.is 0)")
+    q.execute([{:foo  => 1},{:foo  => 2}, {:foo => 60}]).must_equal(false)
+  end
+
   it "should run aggregations on queries" do
     q = Dredd::Query.new("all{ foo > 10 }.sum{ foo }")
     q.execute([{:foo  => 1},{:foo  => 2}, {:foo => 60}]).must_equal(60)
