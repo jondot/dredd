@@ -10,7 +10,6 @@
       d r e d d
 
 Rules over collections
-
 ```
 
 ## Installation
@@ -22,7 +21,8 @@ $ gem install dredd
 ## Usage
 
 Dredd is a sort of DSL, sort of rule runner, combined. 
-You have a rule you want to express, over various values in a collection, and you want to detect various outliers/exceptions within collections.
+
+Use it if you want to detect various outliers/exceptions within collections, detection is expressed with Dredd rules.
 
 
 To start, you should have
