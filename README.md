@@ -42,7 +42,17 @@ result = Dredd.detect "all{ payment > 10 }.size.gt 0",
 result # => true
 ```
 
-See more examples in `spec/dredd/query_spec.rb`
+### Rules
+
+Here's an assortment of queries possible with Dredd's DSL:
+
+```
+all.mean{ payment }
+all{ payment > 10 }.sum{ payment }.is 20
+first(2){ payment > 50 }
+```
+
+See live examples in `spec/dredd/query_spec.rb`
 
 
 # Contributing
