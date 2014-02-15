@@ -55,6 +55,14 @@ first(2){ payment > 50 }
 See live examples in `spec/dredd/query_spec.rb`
 
 
+### Notes
+
+Rules are not sandboxed yet. They will be, and till then - take it into consideration, thanks.
+
+
+
+
+
 # Contributing
 
 Fork, implement, add tests, pull request, get my everlasting thanks and a respectable place here :).
