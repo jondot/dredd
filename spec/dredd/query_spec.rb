@@ -14,6 +14,16 @@ describe Dredd::Query do
     q.execute([{:foo  => 0},{:foo  => 0}, {:foo => 60}]).must_equal(["foo" => 60])
   end
 
+  it "should select first" do
+    q = Dredd::Query.new("first(1){ foo }")
+    q.execute([{:foo  => 0}, {:foo => 60}]).must_equal(["foo" => 0])
+  end
+
+  it "should select last" do
+    q = Dredd::Query.new("last(1){ foo }")
+    q.execute([{:foo  => 0}, {:foo => 60}]).must_equal(["foo" => 60])
+  end
+
   it "should run aggregations on all" do
     q = Dredd::Query.new("all.sum{ foo }")
     q.execute([{:foo  => 1},{:foo  => 2}, {:foo => 60}]).must_equal(63)
